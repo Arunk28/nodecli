@@ -21,8 +21,68 @@ e.on("exit", function (str) {
 cli.responders = {};
 
 cli.responders.help = function () {
-  console.log("you triggerd help command");
+  const _help = {
+    exit: "exit the code",
+    stats: "status bar",
+    listusers: "list the users --user",
+    moreuserinfo: "--userid for more info",
+  };
+  cli.harizontalline();
+  cli.centerd("CLI MANUAL");
+  cli.harizontalline();
+  cli.verticalspace(2);
+
+  //show each command
+  for (let key in _help) {
+    if (_help.hasOwnProperty(key)) {
+      const value = _help[key];
+      let line = `\x1b[33m${key}\x1b[0m`;
+      const padding = 60 - line.length;
+      for (let i = 0; i < padding; i++) {
+        line += " ";
+      }
+      line += value;
+      console.log(line);
+      cli.verticalspace();
+    }
+  }
+  cli.verticalspace(1);
+
+  // end with a line
+  cli.harizontalline();
 };
+
+cli.verticalspace = (lines) => {
+  lines = typeof lines == "number" && lines > 0 ? lines : 1;
+  for (let i = 0; i < lines; i++) {
+    console.log("");
+  }
+};
+cli.harizontalline = () => {
+  const width = process.stdout.columns;
+  let line = "";
+  for (let i = 0; i < width; i++) {
+    line += "-";
+  }
+  console.log(line);
+};
+
+cli.centerd = (str) => {
+  str = typeof str === "string" && str.trim().length > 0 ? str.trim() : "";
+
+  const width = process.stdout.columns;
+
+  const leftPadding = Math.floor((width - str.length) / 2);
+
+  let line = "";
+
+  for (let i = 0; i < leftPadding; i++) {
+    line += " ";
+  }
+  line += str;
+  console.log(line);
+};
+
 cli.responders.stats = () => {
   console.log("you triggerd stats command");
 };
