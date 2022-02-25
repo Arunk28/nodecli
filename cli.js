@@ -36,6 +36,8 @@ cli.responders.help = function () {
   for (let key in _help) {
     if (_help.hasOwnProperty(key)) {
       const value = _help[key];
+      //more colours you can set
+      //see = https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
       let line = `\x1b[33m${key}\x1b[0m`;
       const padding = 60 - line.length;
       for (let i = 0; i < padding; i++) {
