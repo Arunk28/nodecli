@@ -5,6 +5,8 @@ const events = require("events");
 class _events extends events {}
 const e = new _events();
 
+const os = require("os");
+
 const cli = {};
 
 //input handlers
@@ -22,8 +24,8 @@ cli.responders = {};
 
 cli.responders.stats = () => {
   const _stats = {
-    "cpu count": "",
-    "free memory": "",
+    "cpu count": os.cpus().length,
+    "free memory": os.freemem(),
   };
   cli.harizontalline();
   cli.centerd("COMPUTER STATUS");
