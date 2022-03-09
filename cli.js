@@ -20,6 +20,36 @@ e.on("exit", function (str) {
 //responders
 cli.responders = {};
 
+cli.responders.stats = () => {
+  const _stats = {
+    "cpu count": "",
+    "free memory": "",
+  };
+  cli.harizontalline();
+  cli.centerd("COMPUTER STATUS");
+  cli.harizontalline();
+  cli.verticalspace(2);
+
+  //show each command
+  for (let key in _stats) {
+    if (_stats.hasOwnProperty(key)) {
+      const value = _stats[key];
+      let line = `\x1b[33m${key}\x1b[0m`;
+      const padding = 60 - line.length;
+      for (let i = 0; i < padding; i++) {
+        line += " ";
+      }
+      line += value;
+      console.log(line);
+      cli.verticalspace();
+    }
+  }
+  cli.verticalspace(1);
+
+  // end with a line
+  cli.harizontalline();
+};
+
 cli.responders.help = function () {
   const _help = {
     exit: "exit the code",
@@ -85,9 +115,6 @@ cli.centerd = (str) => {
   console.log(line);
 };
 
-cli.responders.stats = () => {
-  console.log("you triggerd stats command");
-};
 cli.responders.exit = () => {
   process.exit(0);
 };
