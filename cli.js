@@ -4,6 +4,7 @@ const debug = util.debuglog("cli");
 const events = require("events");
 class _events extends events {}
 const e = new _events();
+const _data = require("./data");
 
 const os = require("os");
 
@@ -18,6 +19,9 @@ e.on("help", function (str) {
 });
 e.on("exit", function (str) {
   cli.responders.exit();
+});
+e.on("listusers", function (str) {
+  cli.responders.listusers();
 });
 //responders
 cli.responders = {};
@@ -121,10 +125,18 @@ cli.responders.exit = () => {
   process.exit(0);
 };
 
+cli.responders.listusers = () => {
+  cli.verticalspace();
+  _data.users.forEach((user) => {
+    const line = `user : ${user}`;
+    console.log(line);
+  });
+};
+
 cli.processinput = function (str) {
   str = typeof str === "string" && str.trim().length > 0 ? str.trim() : false;
   if (str) {
-    const _inputs = ["help", "exit", "stats", "list users", "more user info"];
+    const _inputs = ["help", "exit", "stats", "listusers", "moreuserinfo"];
     let _match = false;
     _inputs.some((input) => {
       if (str.toLowerCase().indexOf(input) > -1) {
